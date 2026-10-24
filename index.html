@@ -30,7 +30,78 @@
 <script>
 function searchSubjects(){const q=document.getElementById('searchBox').value.trim().toLowerCase();document.querySelectorAll('.subject').forEach(c=>{c.style.display=c.dataset.name.toLowerCase().includes(q)?'':'none';});}
 document.getElementById('searchBox').addEventListener('input',searchSubjects);
-function showSubject(name,icon,bn,description){alert(icon+' '+name+' / '+bn+'\n\n'+description+'\n\nএটি প্রোটোটাইপ—এই বিষয়ের পূর্ণ নোট পরের ধাপে যোগ করা যাবে।');}
+function showSubject(name, icon, bn, description) {
+  const content = {
+    Physics: [
+      "তড়িৎ আধান ও ক্ষেত্র",
+      "স্থির তড়িৎ বিভব ও ধারক",
+      "চল তড়িৎ",
+      "চলতড়িৎ চৌম্বক আবেশ",
+      "আলোকবিজ্ঞান"
+    ],
+    Chemistry: [
+      "দ্রবণ",
+      "তড়িৎ রসায়ন",
+      "রাসায়নিক গতিবিদ্যা",
+      "অ্যালকোহল, ফেনল ও ইথার"
+    ],
+    Biology: [
+      "জীবের প্রজনন",
+      "উদ্ভিদের যৌন প্রজনন",
+      "বংশগতি ও বিবর্তন"
+    ],
+    Mathematics: [
+      "সম্পর্ক ও ফাংশন",
+      "ম্যাট্রিক্স",
+      "অন্তরকলন",
+      "সমাকলন"
+    ],
+    English: [
+      "Reading Comprehension",
+      "Grammar",
+      "Writing Skills"
+    ]
+  };
+
+  const subjects = document.getElementById("subjects");
+  const oldPanel = document.getElementById("subjectDetails");
+
+  if (oldPanel) oldPanel.remove();
+
+  const panel = document.createElement("section");
+  panel.id = "subjectDetails";
+  panel.className = "card";
+  panel.style.marginTop = "20px";
+
+  const heading = document.createElement("h2");
+  heading.textContent = icon + " " + name + " — " + bn;
+  panel.appendChild(heading);
+
+  const intro = document.createElement("p");
+  intro.className = "muted";
+  intro.textContent = "পড়ার জন্য একটি অধ্যায় বেছে নাও।";
+  panel.appendChild(intro);
+
+  const list = document.createElement("div");
+
+  (content[name] || ["অধ্যায়ের তালিকা পরে যোগ করা হবে।"])
+    .forEach((chapter, index) => {
+      const button = document.createElement("button");
+      button.className = "primary";
+      button.style.display = "block";
+      button.style.width = "100%";
+      button.style.marginTop = "10px";
+      button.textContent = (index + 1) + ". " + chapter;
+      button.onclick = () => {
+        alert(chapter + "\n\nএই অধ্যায়ের বিস্তারিত নোট ও MCQ পরের ধাপে যোগ করা হবে।");
+      };
+      list.appendChild(button);
+    });
+
+  panel.appendChild(list);
+  subjects.appendChild(panel);
+  panel.scrollIntoView({ behavior: "smooth" });
+}
 function answer(btn,correct){document.querySelectorAll('.answers button').forEach(b=>b.style.borderColor='');btn.style.borderColor=correct?'#16A34A':'#DC2626';const f=document.getElementById('feedback');f.textContent=correct?'সঠিক উত্তর! ATP কোষে শক্তি সরবরাহে গুরুত্বপূর্ণ ভূমিকা রাখে।':'আবার চেষ্টা করো। সঠিক উত্তর হলো ATP।';f.style.color=correct?'#16A34A':'#DC2626';}
 function resetQuiz(){document.querySelectorAll('.answers button').forEach(b=>b.style.borderColor='');document.getElementById('feedback').textContent='';}
 </script></body></html>
