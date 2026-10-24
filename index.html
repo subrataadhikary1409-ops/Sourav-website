@@ -92,12 +92,119 @@ function showSubject(name, icon, bn, description) {
       button.style.width = "100%";
       button.style.marginTop = "10px";
       button.textContent = (index + 1) + ". " + chapter;
-      button.onclick = () => {
-        alert(chapter + "\n\nএই অধ্যায়ের বিস্তারিত নোট ও MCQ পরের ধাপে যোগ করা হবে।");
-      };
+      button.onclick = () => showChapter(name, chapter);
       list.appendChild(button);
     });
 
+function showChapter(subject, chapter) {
+  const panel = document.getElementById("subjectDetails");
+  if (!panel) return;
+
+  if (subject !== "Physics" || chapter !== "তড়িৎ আধান ও ক্ষেত্র") {
+    panel.innerHTML = `
+      <h2>${chapter}</h2>
+      <p>এই অধ্যায়ের বিস্তারিত নোট পরের ধাপে যোগ করা হবে।</p>
+      <button id="backToChapters" class="primary">অধ্যায়ের তালিকায় ফিরে যাও</button>
+    `;
+    document.getElementById("backToChapters").onclick = () =>
+      showSubject(subject, "⚛️", "পদার্থবিদ্যা", "Physics অধ্যায়সমূহ");
+    panel.scrollIntoView({ behavior: "smooth" });
+    return;
+  }
+
+  panel.innerHTML = `
+    <h2>⚛️ তড়িৎ আধান ও ক্ষেত্র</h2>
+    <p class="muted">Class XII Physics · বাংলা নোট</p>
+
+    <h3>১. তড়িৎ আধান কী?</h3>
+    <p>বস্তুর এমন একটি ধর্ম, যার কারণে বস্তু অন্য আধানযুক্ত বস্তুর উপর তড়িৎ বল প্রয়োগ করে, তাকে তড়িৎ আধান বলে। আধান দুই প্রকার—ধনাত্মক ও ঋণাত্মক।</p>
+
+    <h3>২. আধানের প্রধান ধর্ম</h3>
+    <ul>
+      <li>সমজাতীয় আধান পরস্পরকে বিকর্ষণ করে।</li>
+      <li>বিজাতীয় আধান পরস্পরকে আকর্ষণ করে।</li>
+      <li>আধান সংরক্ষিত থাকে।</li>
+      <li>আধানের SI একক কুলম্ব (C)।</li>
+      <li>আধানের কোয়ান্টায়ন: q = ne, যেখানে n পূর্ণসংখ্যা এবং e = 1.6 × 10⁻¹⁹ C।</li>
+    </ul>
+
+    <h3>৩. কুলম্বের সূত্র</h3>
+    <p>দুটি স্থির বিন্দু আধানের মধ্যে বল আধান দুটির গুণফলের সমানুপাতিক এবং তাদের মধ্যবর্তী দূরত্বের বর্গের ব্যস্তানুপাতিক।</p>
+    <p><strong>F = k |q₁q₂| / r²</strong></p>
+    <p>শূন্যস্থানে k ≈ 9 × 10⁹ N m²/C²। এখানে q₁, q₂ হলো আধান এবং r হলো তাদের মধ্যবর্তী দূরত্ব।</p>
+
+    <h3>৪. তড়িৎ ক্ষেত্র</h3>
+    <p>কোনো আধানের চারপাশের যে অঞ্চলে অন্য আধান তড়িৎ বল অনুভব করে, তাকে তড়িৎ ক্ষেত্র বলে।</p>
+    <p><strong>E = F / q₀</strong></p>
+    <p>তড়িৎ ক্ষেত্রের SI একক N/C। ধনাত্মক পরীক্ষণ আধানের উপর বলের দিকই তড়িৎ ক্ষেত্রের দিক।</p>
+
+    <hr>
+    <h3>📝 MCQ পরীক্ষা</h3>
+    <p>প্রতিটি প্রশ্নের একটি করে সঠিক উত্তর নির্বাচন করো।</p>
+
+    <div class="quiz-question">১. তড়িৎ আধানের SI একক কী?</div>
+    <div class="answers" data-correct="1">
+      <button data-option="0">A. নিউটন</button>
+      <button data-option="1">B. কুলম্ব</button>
+      <button data-option="2">C. জুল</button>
+      <button data-option="3">D. ওহম</button>
+    </div>
+
+    <div class="quiz-question">২. সমজাতীয় আধান পরস্পরকে কী করে?</div>
+    <div class="answers" data-correct="2">
+      <button data-option="0">A. আকর্ষণ</button>
+      <button data-option="1">B. কোনো বল প্রয়োগ করে না</button>
+      <button data-option="2">C. বিকর্ষণ</button>
+      <button data-option="3">D. নিরপেক্ষ করে</button>
+    </div>
+
+    <div class="quiz-question">৩. তড়িৎ ক্ষেত্রের মান কোনটি?</div>
+    <div class="answers" data-correct="0">
+      <button data-option="0">A. E = F / q₀</button>
+      <button data-option="1">B. E = q₀ / F</button>
+      <button data-option="2">C. E = F × q₀</button>
+      <button data-option="3">D. E = F + q₀</button>
+    </div>
+
+    <button id="checkPhysicsQuiz" class="primary">উত্তর যাচাই করো</button>
+    <p id="physicsScore" class="feedback" aria-live="polite"></p>
+    <button id="backToChapters" class="primary">← অধ্যায়ের তালিকায় ফিরে যাও</button>
+  `;
+
+  panel.querySelectorAll(".answers").forEach(group => {
+    group.querySelectorAll("button").forEach(button => {
+      button.onclick = () => {
+        group.querySelectorAll("button").forEach(b => {
+          b.style.borderColor = "";
+          b.removeAttribute("data-selected");
+        });
+        button.style.borderColor = "#2459D3";
+        button.setAttribute("data-selected", "true");
+      };
+    });
+  });
+
+  document.getElementById("checkPhysicsQuiz").onclick = () => {
+    let score = 0;
+    const groups = panel.querySelectorAll(".answers");
+
+    groups.forEach(group => {
+      const selected = group.querySelector("[data-selected='true']");
+      if (selected && selected.dataset.option === group.dataset.correct) {
+        score++;
+      }
+    });
+
+    document.getElementById("physicsScore").textContent =
+      "তোমার স্কোর: " + score + " / " + groups.length;
+  };
+
+  document.getElementById("backToChapters").onclick = () =>
+    showSubject("Physics", "⚛️", "পদার্থবিদ্যা", "Physics অধ্যায়সমূহ");
+
+  panel.scrollIntoView({ behavior: "smooth" });
+}
+  
   panel.appendChild(list);
   subjects.appendChild(panel);
   panel.scrollIntoView({ behavior: "smooth" });
